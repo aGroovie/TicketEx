@@ -1,6 +1,0 @@
-ex\tickets\controller\MainController.class
-ex\tickets\enums\Status.class
-ex\tickets\dao\TicketRepository.class
-ex\tickets\service\impl\TicketServiceImpl.class
-ex\tickets\service\TicketService.class
-ex\tickets\TicketsApplication.class

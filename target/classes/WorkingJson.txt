@@ -1,3 +1,0 @@
-{
-"routeNumber" : 770,"departureDate" : "2019-04-02 11:45","status" :"IN_PROCESS"
-}
