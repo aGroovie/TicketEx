@@ -14,11 +14,9 @@ public interface TicketService {
 
     TicketRequest getTicketById(Long id) throws IncorrectIdException;
 
-    Iterable<TicketRequest> getAllTickets();
+    List<TicketRequest> getAllTickets();
 
     void updateTicketStatus(Status status, TicketRequest ticket);
-
-    List<TicketRequest> findTicketByStatus(Status status);
 
     Status getTicketStatusById(Long id) throws IncorrectIdException;
 

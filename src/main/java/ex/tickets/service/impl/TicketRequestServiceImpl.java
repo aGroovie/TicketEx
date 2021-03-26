@@ -22,9 +22,7 @@ public class TicketRequestServiceImpl implements TicketRequestService {
         TicketRequest ticket;
         try {
             ticket = ticketService.getTicketInProcess();
-
             Status status = ticketService.getStatus(ticket);
-
             ticketService.updateTicketStatus(status, ticket);
         } catch (NoTicketsToUpdateException e) {
             System.out.println(e.getMessage());

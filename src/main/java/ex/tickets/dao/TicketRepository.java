@@ -6,13 +6,15 @@ import org.springframework.stereotype.Repository;
 import ex.tickets.entity.TicketRequest;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
-public interface TicketRepository extends CrudRepository<TicketRequest,Long > {
-
-    List<TicketRequest>  findTicketRequestByStatus(Status status);
+public interface TicketRepository extends CrudRepository<TicketRequest, Long> {
 
 
+    Optional<TicketRequest> findFirstByStatus(Status status);
+
+    List<TicketRequest> findAll();
 
 
 }

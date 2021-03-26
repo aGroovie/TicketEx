@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.time.format.DateTimeParseException;
+import java.util.List;
 
 @Validated
 @RestController(MediaType.APPLICATION_JSON_VALUE)
@@ -24,9 +25,10 @@ public class MainController {
     private TicketService ticketService;
 
 
+
     @RequestMapping(value = "/tickets", method = RequestMethod.GET)
     @ResponseBody
-    public Iterable<TicketRequest> getTickets() {
+    public List<TicketRequest> getAllTickets() {
 
         return ticketService.getAllTickets();
     }
@@ -64,5 +66,8 @@ public class MainController {
         response.sendError(HttpServletResponse.SC_BAD_REQUEST);
         return ex;
     }
+
+
+
 
 }

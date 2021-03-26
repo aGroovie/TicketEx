@@ -12,13 +12,15 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
 
 @Service
 public class TicketServiceImpl implements TicketService {
 
     @Autowired
     private TicketRepository ticketRepository;
+
+    @Autowired
+    RestTemplate restTemplate;
 
     @Override
     public Long saveTicket(TicketRequest ticket) {
@@ -40,7 +42,7 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
-    public Iterable<TicketRequest> getAllTickets() {
+    public List<TicketRequest> getAllTickets() {
         return ticketRepository.findAll();
     }
 
@@ -52,10 +54,6 @@ public class TicketServiceImpl implements TicketService {
 
     }
 
-    @Override
-    public List<TicketRequest> findTicketByStatus(Status status) {
-        return ticketRepository.findTicketRequestByStatus(status);
-    }
 
     @Override
     public Status getTicketStatusById(Long id) throws IncorrectIdException {
@@ -74,8 +72,6 @@ public class TicketServiceImpl implements TicketService {
 
         String ticketId = ticket.getTicketId().toString();
 
-        RestTemplate restTemplate = new RestTemplate();
-
         final String url = "http://localhost:8080/update-ticket/" + ticketId;
 
 
@@ -87,11 +83,9 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public TicketRequest getTicketInProcess() throws NoTicketsToUpdateException {
-        List<TicketRequest> tickets = ticketRepository.findTicketRequestByStatus(Status.IN_PROCESS);
-        if (tickets.size() == 0) {
-            throw new NoTicketsToUpdateException("There are no tickets to update, please add tickets with 'IN_PROCESS' status to database!");
-        }
-        return tickets.get(new Random().nextInt(tickets.size()));
+        Optional<TicketRequest> ticket = Optional.ofNullable(ticketRepository.findFirstByStatus(Status.IN_PROCESS).orElseThrow(
+                () -> new NoTicketsToUpdateException("There are no tickets to update, please add tickets with 'IN_PROCESS' status to database!")));
+        return ticket.get();
     }
 
 
